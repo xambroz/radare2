@@ -92,7 +92,7 @@ typedef struct r_annotated_code_t {
  * @param code A deallocatable character array.
  * @return Pointer to the new RAnnotatedCode structure created.
  */
-R_API RAnnotatedCode *r_annotated_code_new(char *code);
+R_API RAnnotatedCode *r_annotated_code_new(const char *code);
 /**
  * @brief Deallocates the dynamically allocated memory for the specified RAnnotatedCode.
  * 

@@ -3,19 +3,20 @@
 #include <r_core.h>
 #include <r_util.h>
 
-R_API RAnnotatedCode *r_annotated_code_new(char *code) {
+R_API RAnnotatedCode *r_annotated_code_new(const char *code) {
 	RAnnotatedCode *r = R_NEW0 (RAnnotatedCode);
 	if (!r) {
 		return NULL;
 	}
-	r->code = code;
-	r_vector_init (&r->annotations, sizeof (RCodeAnnotation), r_annotation_free, NULL);
+	r->code = strdup (code);
+	r_vector_init (&r->annotations, sizeof (RCodeAnnotation), r_annotation_item_free, NULL);
 	return r;
 }
 
-R_API void r_annotation_free(void *e, void *user) {
+R_API void r_annotation_item_free(void *e, void *user) {
 	(void)user;
 	RCodeAnnotation *annotation = e;
+	free (annotation->code);
 	if (annotation->type == R_CODE_ANNOTATION_TYPE_FUNCTION_NAME) {
 		free (annotation->reference.name);
 	} else if (annotation->type == R_CODE_ANNOTATION_TYPE_LOCAL_VARIABLE || annotation->type == R_CODE_ANNOTATION_TYPE_FUNCTION_PARAMETER) {
