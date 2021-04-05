@@ -173,7 +173,7 @@ R_API bool r_io_cache_write(RIO *io, ut64 addr, const ut8 *buf, int len) {
 		io->cachemode = false;
 		r_io_read_at (io, addr, ch->odata, len);
 		io->cachemode = cm;
-		if (!memcmp (ch->odata, buf, len)) {
+		if (o->nodup && !memcmp (ch->odata, buf, len)) {
 			free (ch->odata);
 			free (ch);
 			return false;

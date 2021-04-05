@@ -115,6 +115,7 @@ typedef struct r_io_t {
 	ut64 mask;
 	RIOUndo undo;
 	SdbList *plugins;
+	bool nodup;
 	char *runprofile;
 	char *envprofile;
 #if USE_PTRACE_WRAP
